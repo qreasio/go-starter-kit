@@ -58,7 +58,6 @@ Gostarterkit site: https://gostarterkit.com
 - Migration with github.com/go-migrate/migration
 - YAML with gopkg.in/yaml.v2
 - Linter with github.com/golangci/golangci-lint
-- Environment variables handling with github.com/qiangxue/go-env
 - Mock generator using github.com/golang/mock
 
 ## GETTING STARTED

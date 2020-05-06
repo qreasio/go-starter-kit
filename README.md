@@ -68,11 +68,11 @@ Gostarterkit site: https://gostarterkit.com
 Change config/local.yaml configuration value properly
 and make sure can connect to blank MySQL database setup properly
 
-2. Run seed
-> make seed
-
-3. Run migration
+2. Run migration
 > make migrate-up
+
+3. Add seed ata
+> make seed
 
 4. Run app
 > make run

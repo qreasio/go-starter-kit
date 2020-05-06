@@ -71,7 +71,7 @@ and make sure can connect to blank MySQL database setup properly
 2. Run migration
 > make migrate-up
 
-3. Add seed ata
+3. Add seed data
 > make seed
 
 4. Run app

@@ -1,0 +1,45 @@
+# More info on config here: https://github.com/golangci/golangci-lint#config-file
+run:
+  concurrency: 4
+  deadline: 10m
+  issues-exit-code: 1
+  tests: true
+  skip-dirs:
+    - bin
+    - tmp
+    - test
+    - vendor
+  skip-files:
+    - \.pb\.go$
+    - \.pb\.goclay\.go$
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0
+  dupl:
+    threshold: 100
+  goconst:
+    min-len:         2
+    min-occurrences: 2
+
+linters:
+  disable-all: true
+  enable:
+    - goimports
+    - golint
+    - ineffassign
+    - goconst
+
+issues:
+  exclude-use-default: false
+  exclude:
+    - G104
+    - exported func * returns unexported type *, which can be annoying to use
+    - should have a package comment, unless it's in another file for this package

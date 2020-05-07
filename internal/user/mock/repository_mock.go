@@ -9,31 +9,31 @@ import (
 	model "github.com/qreasio/go-starter-kit/pkg/model"
 )
 
-// MockRepository is a mock of Repository interface
-type MockRepository struct {
+// Repository is a mock of Repository interface
+type Repository struct {
 	ctrl     *gomock.Controller
-	recorder *MockRepositoryMockRecorder
+	recorder *RepositoryMockRecorder
 }
 
-// MockRepositoryMockRecorder is the mock recorder for MockRepository
-type MockRepositoryMockRecorder struct {
-	mock *MockRepository
+// RepositoryMockRecorder is the mock recorder for Repository
+type RepositoryMockRecorder struct {
+	mock *Repository
 }
 
 // NewMockRepository creates a new mock instance
-func NewMockRepository(ctrl *gomock.Controller) *MockRepository {
-	mock := &MockRepository{ctrl: ctrl}
-	mock.recorder = &MockRepositoryMockRecorder{mock}
+func NewMockRepository(ctrl *gomock.Controller) *Repository {
+	mock := &Repository{ctrl: ctrl}
+	mock.recorder = &RepositoryMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
+func (m *Repository) EXPECT() *RepositoryMockRecorder {
 	return m.recorder
 }
 
 // List mocks base method
-func (m *MockRepository) List(ctx context.Context, id *repository_go.ListUsersRequest) ([]model.User, error) {
+func (m *Repository) List(ctx context.Context, id *repository_go.ListUsersRequest) ([]model.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", ctx, id)
 	ret0, _ := ret[0].([]model.User)
@@ -42,7 +42,7 @@ func (m *MockRepository) List(ctx context.Context, id *repository_go.ListUsersRe
 }
 
 // List indicates an expected call of List
-func (mr *MockRepositoryMockRecorder) List(ctx, id interface{}) *gomock.Call {
+func (mr *RepositoryMockRecorder) List(ctx, id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockRepository)(nil).List), ctx, id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*Repository)(nil).List), ctx, id)
 }

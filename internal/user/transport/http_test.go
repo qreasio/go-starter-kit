@@ -17,7 +17,7 @@ import (
 	"github.com/qreasio/go-starter-kit/pkg/model"
 )
 
-// NewUserHTTP returns ne UserHTTP struct instance
+// NewUserHTTPMock returns new UserHTTP struct with mock service
 func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) UserHTTP {
 	user1 := model.User{
 		Firstname: "Isak",

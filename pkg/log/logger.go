@@ -98,7 +98,7 @@ func getCorrelationID(req *http.Request) string {
 	return req.Header.Get("X-Correlation-ID")
 }
 
-// getRequestID extracts the correlation ID from the HTTP request
+// getRequestID extracts the request ID from the HTTP request
 func getRequestID(req *http.Request) string {
 	return req.Header.Get("X-Request-ID")
 }

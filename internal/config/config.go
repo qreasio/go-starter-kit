@@ -1,6 +1,8 @@
 package config
 
 import (
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -26,19 +28,22 @@ type Server struct {
 
 // Load returns config from yaml and environment variables.
 func Load(file string, logger log.Logger) (*Config, error) {
+	logger.Infof("loading config file : %s \n", file)
+
 	// default config
 	c := Config{}
-
 	// load from YAML config file
-	bytes, err := ioutil.ReadFile(file)
-	if err != nil {
-		return nil, err
-	}
-	if err = yaml.Unmarshal(bytes, &c); err != nil {
+	if rawcfg, err := ioutil.ReadFile(file); err == nil {
+		if err := yaml.Unmarshal(rawcfg, &c); err != nil {
+			logger.Errorf("error on json marshall of config file : %s \n", file)
+			return nil, err
+		}
+	} else {
+		logger.Errorf("error reading config file : %s \n", file)
 		return nil, err
 	}
 
-	// add code here to load from env variables and override the value from yaml, if any
+	// load from env variables and override the value from yaml, if any
 	if os.Getenv("APP_DSN") != "" {
 		c.DB.Dsn = os.Getenv("APP_DSN")
 	}
@@ -46,5 +51,19 @@ func Load(file string, logger log.Logger) (*Config, error) {
 		c.Server.Port = os.Getenv("APP_PORT")
 	}
 
-	return &c, err
+	// construct dsn from separate db env vars if it is still empty
+	if c.DB.Dsn == "" {
+		c.DB.Dsn = fmt.Sprintf("%s:%s@(%s:3306)/%s?parseTime=true&multiStatements=true",
+			os.Getenv("DB_USER"),
+			os.Getenv("DB_PASSWORD"),
+			os.Getenv("DB_HOST"),
+			os.Getenv("DB_NAME"))
+	}
+
+	// if dsn still empty, throw error
+	if c.DB.Dsn == "" {
+		errors.New("database configuration is missing")
+	}
+
+	return &c, nil
 }

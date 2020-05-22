@@ -5,8 +5,8 @@ GO_PKGS=$(foreach pkg, $(shell go list ./...), $(if $(findstring /vendor/, $(pkg
 GO_FILES=$(shell find . -type f -name '*.go' -not -path './vendor/*')
 
 ENV := local
-ifdef $$ENV
-ENV := $$ENV
+ifdef $$APP_ENV
+ENV := $$APP_ENV
 endif
 
 export PROJECT = github.com/qreasio/go-starter-kit
@@ -17,19 +17,21 @@ build:
 
 build-mac:
 	env GOOS=darwin GOARCH=amd64 go build -o bin/server $(PROJECT)/cmd
+	env GOOS=darwin GOARCH=amd64 go build -o bin/admin $(PROJECT)/cmd/admin
 	chmod +x bin/server
+	chmod +x bin/admin
 
 run:
-	go run .c/cmd/server/main.go
+	go run ./cmd/main.go
 
-migrate-up:
-	go run ./cmd/admin/main.go migrate config/${ENV}.yaml up
+migrate:
+	./bin/admin migrate config/${ENV}.yaml up
 
 migrate-down:
-	go run ./cmd/admin/main.go migrate config/${ENV}.yaml down
+	./bin/admin migrate config/${ENV}.yaml down
 
 seed:
-	go run ./cmd/admin/main.go seed config/${ENV}.yaml test/testdata/seed.sql
+	./bin/admin seed config/${ENV}.yaml test/testdata/seed.sql
 
 test:
 	go test ./... -count=1

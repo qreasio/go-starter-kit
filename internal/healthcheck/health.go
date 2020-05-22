@@ -9,7 +9,7 @@ import (
 
 // RegisterHealthRouter register routing for health check endpoint
 func RegisterHealthRouter(r chi.Router) http.Handler {
-	r.Get("/", Check)
+	r.Get("/health", Check)
 	return r
 }
 

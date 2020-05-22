@@ -1,0 +1,5 @@
+database:
+  dsn: "username:password@(mysql:3306)/starterkit?parseTime=true&multiStatements=true"
+
+server:
+  port: :8080

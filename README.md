@@ -16,31 +16,31 @@ This project follows SOLID & Clean architecture
 
 ## Features
 
-- Versioning
-- Pagination
-- Configuration
-- Logging
-- Error Handling
-- Validation
-- Health Check
-- Data Seed
-- Data Migration
-- Run & Manage via CLI Command
-- Makefile
-- Linter
-- Unit Test
+- [x] Versioning
+- [x] Pagination
+- [x] Configuration
+- [x] Logging
+- [x] Error Handling
+- [x] Validation
+- [x] Health Check
+- [x] Data Seed
+- [x] DB Migration
+- [x] Run & Manage via CLI Command
+- [x] Makefile
+- [x] Linter
+- [x] Unit Test
+- [x] Docker & Docker Compose
 
-### Todo:
-- Add more complete example for service, repository and test
-- Use Viper for better handling env and config
-- Add Integration Test
-- Add E2E Test
-- Add Swagger API Documentation integration
-- Add JWT base Authentication
-- Add Observability/Metrics 
-- Add Docker deployment
-- Add Kubernetes deployment
-- Improve CLI with Cobra
+Todo:
+- [ ] Swagger API Documentation integration
+- [ ] Integration Test
+- [ ] E2E Test
+- [ ] Complete example for service, repository and test
+- [ ] JWT base Authentication
+- [ ] Observability/Metrics 
+- [ ] Kubernetes deployment
+- [ ] Use Cobra for CLI
+- [ ] Viper for better handling env and config
 
 ### Website
 
@@ -62,20 +62,59 @@ Gostarterkit site: https://gostarterkit.com
 
 ## GETTING STARTED
 
-1. Set database & config
+Below are the steps if you want to run locally without docker
 
-Change config/local.yaml configuration value properly
-and make sure can connect to blank MySQL database setup properly
+1. Set required environment variable
 
-2. Run migration
-> make migrate-up
+    ENV=local
 
-3. Add seed data
-> make seed
+2. Set configuration
 
-4. Run app
-> make run
+    Change config/local.yaml configuration value properly
+    and make sure can connect to blank MySQL database properly
 
+3. Run migration
+
+    > make migrate-up
+
+4. Add seed data
+    
+    > make seed
+
+5. Run app
+    > make run
+
+6. Open the browser 
+
+    Visit the url
+    > http://localhost:8080/v1/users
+
+
+## Get Started Using Docker Compose
+
+Below are the steps if you want to run locally with docker & docker compose
+
+1. Build docker image
+
+    Generate the docker imgae by this command:
+    > docker build --rm -t starterkitapi -f dockerfile.api .
+                                                                      
+2. Run with docker compose
+    
+    Copy the sample.env to .env and adjust it then run the docker compose with this command:
+    > docker-compose up                
+                                                                               
+3. Open the browser 
+
+    Visit the url
+    > http://localhost:8080/v1/users
+                                                                    
+4. Quit & Cleanup
+    
+    Click Ctrl+C to quit in console then run these commands below to clean up all things: 
+    > docker-compose rm -v
+ 
+ 
 ## Inspiration
 
 Golang Project Layout

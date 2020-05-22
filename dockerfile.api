@@ -3,11 +3,6 @@
 ############################
 FROM golang:1.14-buster as builder
 
-ENV GOOS=linux
-# Create a location in the container for the source code. Using the
-# default GOPATH location.
-RUN mkdir -p /api
-
 WORKDIR /api
 COPY . .
 
@@ -24,14 +19,13 @@ FROM alpine:3.11.6
 
 WORKDIR /app
 
-# Copy our static executable
+# Copy only required files to final docker image
 COPY --from=builder /api/Makefile  /app/Makefile
 COPY --from=builder /api/cmd/bin/server /app/bin/server
 COPY --from=builder /api/cmd/bin/admin /app/bin/admin
 COPY --from=builder /api/migration/* /app/migration/
 COPY --from=builder /api/config/*.yaml /app/config/
 COPY --from=builder /api/cmd/entrypoint.sh /app/entrypoint.sh
-COPY --from=builder /api/cmd/wait-for-it.sh /app/wait-for-it.sh
 COPY --from=builder /api/test/testdata/* /app/testdata/
 
 ENV WAIT_VERSION 2.7.2

@@ -17,15 +17,15 @@ import (
 
 // UserHTTP is struct to represent user http transport
 type UserHTTP struct {
-	svc user.Service
-	log log.Logger
+	svc    user.Service
+	logger log.Logger
 }
 
 // NewUserHTTP returns ne UserHTTP struct instance
-func NewUserHTTP(db *sqlx.DB, log log.Logger, validator *validator.Validate) UserHTTP {
-	repo := user.NewRepository(db, log)
-	svc := user.NewService(repo, validator)
-	return UserHTTP{svc: svc, log: log}
+func NewUserHTTP(db *sqlx.DB, logger log.Logger, validator *validator.Validate) UserHTTP {
+	repo := user.NewRepository(db, logger)
+	svc := user.NewService(repo, validator, logger)
+	return UserHTTP{svc: svc, logger: logger}
 }
 
 // RegisterUserRouter registers router for users endpoint
@@ -50,7 +50,7 @@ func (h UserHTTP) List(w http.ResponseWriter, r *http.Request) {
 	listRequest := listRequestDecoder(r)
 	users, err := h.svc.ListUsers(r.Context(), listRequest)
 	if err != nil {
-		h.log.Errorf("list users error : %s", err)
+		h.logger.With(r.Context()).Errorf("list users error : %s", err)
 		render.Render(w, r, e.BadRequest(err, "bad request"))
 		return
 	}

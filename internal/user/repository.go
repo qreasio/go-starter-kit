@@ -10,7 +10,8 @@ import (
 )
 
 var (
-	listUsersSQL = "SELECT firstname,lastname,email,created,updated FROM users limit ?,?"
+	// ListUsersSQL is SQL Clause to select public users data
+	ListUsersSQL = "SELECT username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users limit ?,?"
 )
 
 // Repository encapsulates the logic to user
@@ -35,7 +36,7 @@ func NewRepository(db *sqlx.DB, log log.Logger) Repository {
 func (r repository) List(ctx context.Context, list *ListUsersRequest) ([]model.User, error) {
 	users := make([]model.User, 0)
 	offset := (list.Page - 1) * list.Limit
-	err := r.db.Select(&users, listUsersSQL, offset, list.Limit)
+	err := r.db.Select(&users, ListUsersSQL, offset, list.Limit)
 	if err != nil {
 		r.logger.Errorf("Failed to select users %s", err)
 		return nil, err

@@ -1,4 +1,4 @@
-package user
+package user_test
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jmoiron/sqlx"
+	. "github.com/qreasio/go-starter-kit/internal/user"
 	"github.com/qreasio/go-starter-kit/pkg/log"
 	"github.com/qreasio/go-starter-kit/pkg/model"
 )
@@ -24,10 +25,10 @@ func TestUserRepository_ListUsers(t *testing.T) {
 
 	t.Log("Test List Users with default parameter")
 	{
-		rows := sqlmock.NewRows([]string{"firstname", "lastname", "email", "created", "updated"}).
+		rows := sqlmock.NewRows([]string{"first_name", "last_name", "email", "date_joined", "last_login"}).
 			AddRow("Isak", "Rickyanto", "isak.rickyanto@gmail.com", time.Now(), time.Now()).
 			AddRow("Farida", "Tjandra", "farida@tjandra.com", time.Now(), time.Now())
-		mock.ExpectQuery(listUsersSQL).WithArgs(0, 2).WillReturnRows(rows)
+		mock.ExpectQuery(ListUsersSQL).WithArgs(0, 2).WillReturnRows(rows)
 
 		p := model.NewPagination()
 		users, err := repo.List(context.Background(), &ListUsersRequest{Pagination: *p, Search: ""})
@@ -44,9 +45,9 @@ func TestUserRepository_ListUsers(t *testing.T) {
 
 	t.Log("Test List Users with specific limit")
 	{
-		row := sqlmock.NewRows([]string{"firstname", "lastname", "email", "created", "updated"}).
+		row := sqlmock.NewRows([]string{"first_name", "last_name", "email", "date_joined", "last_login"}).
 			AddRow("Isak", "Rickyanto", "isak.rickyanto@gmail.com", time.Now(), time.Now())
-		mock.ExpectQuery(listUsersSQL).WithArgs(0, 1).WillReturnRows(row)
+		mock.ExpectQuery(ListUsersSQL).WithArgs(0, 1).WillReturnRows(row)
 
 		p := model.NewPagination()
 		p.Limit = 1

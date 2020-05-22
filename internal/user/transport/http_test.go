@@ -20,18 +20,18 @@ import (
 // NewUserHTTPMock returns new UserHTTP struct with mock service
 func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) UserHTTP {
 	user1 := model.User{
-		Firstname: "Isak",
-		Lastname:  "Rickyanto",
-		Email:     "isak@ricky.com",
-		Created:   time.Now(),
-		Updated:   time.Now(),
+		Firstname:  "Isak",
+		Lastname:   "Rickyanto",
+		Email:      "isak@ricky.com",
+		DateJoined: time.Now(),
+		LastLogin:  time.Now(),
 	}
 	user2 := model.User{
-		Firstname: "Fafa",
-		Lastname:  "Tjan",
-		Email:     "fafa@tjan.com",
-		Created:   time.Now(),
-		Updated:   time.Now(),
+		Firstname:  "Fafa",
+		Lastname:   "Tjan",
+		Email:      "fafa@tjan.com",
+		DateJoined: time.Now(),
+		LastLogin:  time.Now(),
 	}
 	mockListUsers := make([]model.User, 0)
 	mockListUsers = append(mockListUsers, user1, user2)
@@ -42,7 +42,7 @@ func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) Use
 
 	svc.EXPECT().ListUsers(gomock.Any(), req).Return(mockListUsers, nil)
 
-	return UserHTTP{svc: svc, log: log.New()}
+	return UserHTTP{svc: svc, logger: log.New()}
 }
 
 func testRequest(t *testing.T, ts *httptest.Server, method, path string, body io.Reader) (*http.Response, string) {

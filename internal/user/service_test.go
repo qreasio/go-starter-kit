@@ -2,6 +2,7 @@ package user_test
 
 import (
 	"context"
+	"github.com/qreasio/go-starter-kit/pkg/log"
 	"testing"
 	"time"
 
@@ -20,18 +21,18 @@ func TestUserService_ListUsers(t *testing.T) {
 	repo := mock.NewMockRepository(ctrl)
 
 	user1 := model.User{
-		Firstname: "Isak",
-		Lastname:  "Rickyanto",
-		Email:     "isak@ricky.com",
-		Created:   time.Now(),
-		Updated:   time.Now(),
+		Firstname:  "Isak",
+		Lastname:   "Rickyanto",
+		Email:      "isak@ricky.com",
+		DateJoined: time.Now(),
+		LastLogin:  time.Now(),
 	}
 	user2 := model.User{
-		Firstname: "Fafa",
-		Lastname:  "Tjan",
-		Email:     "fafa@tjan.com",
-		Created:   time.Now(),
-		Updated:   time.Now(),
+		Firstname:  "Fafa",
+		Lastname:   "Tjan",
+		Email:      "fafa@tjan.com",
+		DateJoined: time.Now(),
+		LastLogin:  time.Now(),
 	}
 
 	mockListUsers := make([]model.User, 0)
@@ -45,7 +46,8 @@ func TestUserService_ListUsers(t *testing.T) {
 		List(ctx, gomock.Eq(req)).
 		Return(mockListUsers, nil).AnyTimes()
 
-	service := user.NewService(repo, validate)
+	logger := log.New().With(nil)
+	service := user.NewService(repo, validate, logger)
 
 	t.Log("Test UserService")
 	{

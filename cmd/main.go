@@ -16,6 +16,8 @@ import (
 // Version set current code version
 var Version = "1.0.0"
 
+var configPath = flag.String("config", "./config/local.yaml", "path to the config file")
+
 func main() {
 	if err := run(); err != nil {
 		logger.Println("error :", err)
@@ -24,12 +26,10 @@ func main() {
 }
 
 func initialize() (*config.Config, log.Logger, error) {
-
 	logger := log.New().With(nil, "version", Version)
-	cfgPath := flag.String("p", "config/local.yaml", "Path to config file")
 	flag.Parse()
 
-	cfg, err := config.Load(*cfgPath, logger)
+	cfg, err := config.Load(*configPath, logger)
 	if err != nil {
 		logger.Errorf("failed to load application configuration: %s", err)
 		return nil, nil, err
@@ -53,6 +53,5 @@ func run() error {
 	}
 
 	r := server.Routing(db, logger)
-
 	return server.Start(cfg, r, logger)
 }

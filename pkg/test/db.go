@@ -22,13 +22,13 @@ var (
 	db *sqlx.DB
 )
 
-func SetupMySQLDBContainer(logger log.Logger) (func(), *sqlx.DB, error) {
+func SetupMySQLContainer(logger log.Logger) (func(), *sqlx.DB, error) {
 	logger.Info("setup MySQL Container")
 	ctx := context.Background()
 
 	seedDataPath, err := os.Getwd()
 	if err != nil {
-		logger.Errorf("error get working directoryr %s", err)
+		logger.Errorf("error get working directory: %s", err)
 		panic(fmt.Sprintf("%v", err))
 	}
 	mountPath := seedDataPath + "/../../test/integration"
@@ -52,15 +52,15 @@ func SetupMySQLDBContainer(logger log.Logger) (func(), *sqlx.DB, error) {
 	})
 
 	if err != nil {
-		logger.Errorf("error starting mysql container %s", err)
+		logger.Errorf("error starting mysql container: %s", err)
 		panic(fmt.Sprintf("%v", err))
 	}
 
 	closeContainer := func() {
-		logger.Info(">>>>>> terminating container")
+		logger.Info("terminating container")
 		err := mysqlC.Terminate(ctx)
 		if err != nil {
-			logger.Errorf("error terminating mysql container %s", err)
+			logger.Errorf("error terminating mysql container: %s", err)
 			panic(fmt.Sprintf("%v", err))
 		}
 	}
@@ -74,7 +74,7 @@ func SetupMySQLDBContainer(logger log.Logger) (func(), *sqlx.DB, error) {
 
 	db, err = sqlx.Connect("mysql", connectionString)
 	if err != nil {
-		logger.Info("error Connect db: %+v\n", err)
+		logger.Info("error connect to db: %+v\n", err)
 		return closeContainer, db, err
 	}
 

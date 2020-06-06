@@ -20,10 +20,10 @@ var (
 func TestMain(m *testing.M) {
 	var err error
 	var terminateContainer func() // variable to store function to terminate container
-	terminateContainer, db, err = test.SetupMySQLDBContainer(logger)
+	terminateContainer, db, err = test.SetupMySQLContainer(logger)
 	defer terminateContainer() // make sure container will be terminated at the end
 	if err != nil {
-		logger.Error("failed to setup MySQLDB container")
+		logger.Error("failed to setup MySQL container")
 		panic(err)
 	}
 	os.Exit(m.Run())
@@ -36,7 +36,7 @@ func TestUserRepository_ListIntegration(t *testing.T) {
 	users, err := repo.List(ctx, &req)
 
 	if err != nil {
-		t.Errorf("Error on list users : %s", err)
+		t.Errorf("error on list users : %s", err)
 	}
 
 	if len(users) < 1 {

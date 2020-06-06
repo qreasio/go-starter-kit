@@ -30,12 +30,11 @@ This project follows SOLID & Clean architecture
 - [x] Linter
 - [x] Unit Test
 - [x] Docker & Docker Compose
+- [x] Integration Test sample
 
 Todo:
-- [ ] Swagger API Documentation integration
-- [ ] Integration Test
-- [ ] E2E Test
-- [ ] Complete example for service, repository and test
+
+- [ ] Add more examples for service, repository and test
 - [ ] JWT base Authentication
 - [ ] Observability/Metrics 
 - [ ] Kubernetes deployment
@@ -60,7 +59,7 @@ Gostarterkit site: https://gostarterkit.com
 - Linter with github.com/golangci/golangci-lint
 - Mock generator using github.com/golang/mock
 
-## GETTING STARTED
+## Get Started
 
 Below are the steps if you want to run locally without docker
 
@@ -89,6 +88,9 @@ Below are the steps if you want to run locally without docker
     Visit the url
     > http://localhost:8080/v1/users
 
+### Run Test
+
+go test -v ./internal/user/...
 
 ## Get Started Using Docker Compose
 

@@ -43,3 +43,10 @@ type ListUsersRequest struct {
 func (listRequest ListUsersRequest) Validate(validator *validator.Validate) error {
 	return validator.Struct(listRequest)
 }
+
+func NewListUsersRequest() ListUsersRequest {
+	return ListUsersRequest{
+		Pagination: *model.NewPagination(),
+		Search:     "",
+	}
+}

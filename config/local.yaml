@@ -1,5 +1,5 @@
 database:
-  dsn: "user:password@(localhost:3306)/dbname?parseTime=true&multiStatements=true"
+  dsn: "root:superdb@(localhost:3306)/starterkit?parseTime=true&multiStatements=true"
 
 server:
   port: :8080

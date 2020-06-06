@@ -12,4 +12,6 @@ CREATE TABLE IF NOT EXISTS `users`  (
         `date_joined` datetime(6) NOT NULL,
         PRIMARY KEY (`id`),
         UNIQUE KEY `username` (`username`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+

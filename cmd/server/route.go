@@ -20,8 +20,8 @@ var validate *validator.Validate
 // Routing setup api routing
 func Routing(db *sqlx.DB, logger log.Logger) chi.Router {
 	validate = validator.New()
-	// setup server routing
 
+	// setup server routing
 	r := chi.NewRouter()
 
 	// homepage welcome page

@@ -40,9 +40,9 @@ func run() error {
 
 	switch os.Args[1] {
 	case "migrate":
-		err = migrate(cfg, logger, os.Args[3])
+		err = Migrate(cfg, logger, os.Args[3])
 	case "seed":
-		err = seed(cfg, logger, os.Args[3])
+		err = Seed(cfg, logger, os.Args[3])
 	default:
 		err = errors.New("must specify a command")
 	}
@@ -54,7 +54,7 @@ func run() error {
 	return nil
 }
 
-func migrate(cfg *config.Config, logger log.Logger, command string) error {
+func Migrate(cfg *config.Config, logger log.Logger, command string) error {
 	db, err := sql.Open("mysql", cfg.DB.Dsn)
 	if err != nil {
 		logger.Error(err)
@@ -84,7 +84,7 @@ func migrate(cfg *config.Config, logger log.Logger, command string) error {
 		return err
 	}
 	if command == "up" {
-		logger.Info("migrate up")
+		logger.Info("Migrate up")
 		if err := m.Up(); err != nil && err != migrater.ErrNoChange {
 			logger.Errorf("An error occurred while syncing the database.. %v", err)
 			return err
@@ -92,7 +92,7 @@ func migrate(cfg *config.Config, logger log.Logger, command string) error {
 	}
 
 	if command == "down" {
-		logger.Info("migrate down")
+		logger.Info("Migrate down")
 		if err := m.Down(); err != nil && err != migrater.ErrNoChange {
 			logger.Errorf("An error occurred while syncing the database.. %v", err)
 			return err
@@ -108,7 +108,7 @@ func migrate(cfg *config.Config, logger log.Logger, command string) error {
 	return nil
 }
 
-func seed(cfg *config.Config, logger log.Logger, sqlFilename string) error {
+func Seed(cfg *config.Config, logger log.Logger, sqlFilename string) error {
 	db, err := sqlx.Open("mysql", cfg.DB.Dsn)
 	if err != nil {
 		return err

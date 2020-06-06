@@ -2,9 +2,10 @@ package user_test
 
 import (
 	"context"
-	"github.com/qreasio/go-starter-kit/pkg/log"
 	"testing"
 	"time"
+
+	"github.com/qreasio/go-starter-kit/pkg/log"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/golang/mock/gomock"

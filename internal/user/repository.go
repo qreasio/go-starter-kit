@@ -14,20 +14,20 @@ var (
 	ListUsersSQL = "SELECT username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users limit ?,?"
 )
 
-// Repository encapsulates the logic to user
+// Repository define user repository methods interface
 type Repository interface {
 	// Get returns the user with the specified user ID.
 	// Get(ctx context.Context, id string) (*model.User, error)
 	List(ctx context.Context, id *ListUsersRequest) ([]model.User, error)
 }
 
-// repository persists albums in database
+// repository persists user in database
 type repository struct {
 	db     *sqlx.DB
 	logger log.Logger
 }
 
-// NewRepository creates a new album repository
+// NewRepository creates a new user repository
 func NewRepository(db *sqlx.DB, log log.Logger) Repository {
 	return repository{db: db, logger: log}
 }

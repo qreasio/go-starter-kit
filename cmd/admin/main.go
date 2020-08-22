@@ -54,6 +54,7 @@ func run() error {
 	return nil
 }
 
+// Migrate to run database migration up or down
 func Migrate(cfg *config.Config, logger log.Logger, command string) error {
 	db, err := sql.Open("mysql", cfg.DB.Dsn)
 	if err != nil {
@@ -108,6 +109,7 @@ func Migrate(cfg *config.Config, logger log.Logger, command string) error {
 	return nil
 }
 
+// Seed to populate database with seed data
 func Seed(cfg *config.Config, logger log.Logger, sqlFilename string) error {
 	db, err := sqlx.Open("mysql", cfg.DB.Dsn)
 	if err != nil {

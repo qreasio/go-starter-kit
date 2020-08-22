@@ -7,10 +7,9 @@ import (
 	"github.com/go-chi/render"
 )
 
-// RegisterHealthRouter register routing for health check endpoint
-func RegisterHealthRouter(r chi.Router) http.Handler {
+// RegisterHandlers register handler for health check endpoint
+func RegisterHandlers(r chi.Router) {
 	r.Get("/health", Check)
-	return r
 }
 
 // Check implements endpoint for health check

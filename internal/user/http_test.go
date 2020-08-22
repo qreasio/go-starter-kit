@@ -1,4 +1,4 @@
-package transport
+package user_test
 
 import (
 	"io"
@@ -12,13 +12,13 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/golang/mock/gomock"
 	"github.com/qreasio/go-starter-kit/internal/user"
-	"github.com/qreasio/go-starter-kit/internal/user/mock"
+	mock "github.com/qreasio/go-starter-kit/internal/user/mock"
 	"github.com/qreasio/go-starter-kit/pkg/log"
 	"github.com/qreasio/go-starter-kit/pkg/model"
 )
 
 // NewUserHTTPMock returns new UserHTTP struct with mock service
-func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) UserHTTP {
+func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) user.HTTP {
 	user1 := model.User{
 		Firstname:  "Isak",
 		Lastname:   "Rickyanto",
@@ -41,8 +41,8 @@ func NewUserHTTPMock(ctrl *gomock.Controller, validator *validator.Validate) Use
 	req := &user.ListUsersRequest{Pagination: *model.NewPagination()}
 
 	svc.EXPECT().ListUsers(gomock.Any(), req).Return(mockListUsers, nil)
-
-	return UserHTTP{svc: svc, logger: log.New()}
+	logger := log.New()
+	return user.GetUserHTTP(svc, logger)
 }
 
 func testRequest(t *testing.T, ts *httptest.Server, method, path string, body io.Reader) (*http.Response, string) {
@@ -73,7 +73,7 @@ func TestUserHTTP(t *testing.T) {
 	defer ctrl.Finish()
 
 	userHTTP := NewUserHTTPMock(ctrl, validator.New())
-	handler := RegisterUserRouter(userHTTP)
+	handler := user.RegisterHTTPHandlers(userHTTP)
 
 	ts := httptest.NewServer(handler)
 	defer ts.Close()

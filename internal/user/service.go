@@ -44,6 +44,7 @@ func (listRequest ListUsersRequest) Validate(validator *validator.Validate) erro
 	return validator.Struct(listRequest)
 }
 
+// NewListUsersRequest construct new ListUsersRequest
 func NewListUsersRequest() ListUsersRequest {
 	return ListUsersRequest{
 		Pagination: *model.NewPagination(),

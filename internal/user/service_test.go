@@ -5,12 +5,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/qreasio/go-starter-kit/internal/user"
+	"github.com/qreasio/go-starter-kit/internal/user/mock"
+
 	"github.com/qreasio/go-starter-kit/pkg/log"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/golang/mock/gomock"
-	"github.com/qreasio/go-starter-kit/internal/user"
-	"github.com/qreasio/go-starter-kit/internal/user/mock"
 	"github.com/qreasio/go-starter-kit/pkg/model"
 )
 
@@ -19,7 +20,7 @@ func TestUserService_ListUsers(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	repo := mock.NewMockRepository(ctrl)
+	repo := mock_user.NewMockRepository(ctrl)
 
 	user1 := model.User{
 		Firstname:  "Isak",

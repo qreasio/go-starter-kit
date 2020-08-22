@@ -3,15 +3,16 @@ package server
 import (
 	"net/http"
 
-	"github.com/go-chi/render"
-	"github.com/go-playground/validator/v10"
-	"github.com/qreasio/go-starter-kit/internal/healthcheck"
-	usertransport "github.com/qreasio/go-starter-kit/internal/user/transport"
-	"github.com/qreasio/go-starter-kit/pkg/log"
 	"github.com/qreasio/go-starter-kit/pkg/mid"
 
+	"github.com/qreasio/go-starter-kit/internal/user"
+
 	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
+	"github.com/go-playground/validator/v10"
 	"github.com/jmoiron/sqlx"
+	"github.com/qreasio/go-starter-kit/internal/healthcheck"
+	"github.com/qreasio/go-starter-kit/pkg/log"
 )
 
 // use a single instance of Validate, it caches struct info
@@ -30,11 +31,12 @@ func Routing(db *sqlx.DB, logger log.Logger) chi.Router {
 	})
 
 	// register health check route
-	healthcheck.RegisterHealthRouter(r)
+	healthcheck.RegisterHandlers(r)
 
+	// register v1 api path group
 	r.Route("/v1", func(r chi.Router) {
 		r.Use(mid.APIVersionCtx("v1"))
-		r.Mount("/users", usertransport.RegisterUserRouter(usertransport.NewUserHTTP(db, logger, validate)))
+		user.RegisterHandlers(r, db, logger, validate)
 	})
 
 	return r

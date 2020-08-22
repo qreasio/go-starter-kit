@@ -24,6 +24,9 @@ build-mac:
 run:
 	go run ./cmd/main.go
 
+start:
+	./bin/server
+
 migrate:
 	./bin/admin migrate config/${ENV}.yaml up
 

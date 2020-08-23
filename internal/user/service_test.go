@@ -120,3 +120,41 @@ func TestUserService_ListUsers(t *testing.T) {
 	}
 
 }
+
+func TestUserService_GetUserbyUsername(t *testing.T) {
+	validate := validator.New()
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
+
+	repo := mock_user.NewMockRepository(ctrl)
+
+	const username = "isak"
+	user1 := model.User{
+		Username:   "isak",
+		Firstname:  "Isak",
+		Lastname:   "Rickyanto",
+		Email:      "isak@ricky.com",
+		DateJoined: time.Now(),
+		LastLogin:  time.Now(),
+	}
+
+	ctx := context.Background()
+
+	repo.EXPECT().
+		GetByUsername(ctx, username).
+		Return(&user1, nil).AnyTimes()
+
+	logger := log.New()
+	service := user.NewService(repo, validate, logger)
+
+	user, err := service.GetByUsername(ctx, username)
+
+	if err != nil {
+		t.Errorf("Failed to get user by username: %s, %s", username, err)
+	}
+
+	if user.Username != username {
+		t.Errorf("Failed to get user, got : %s, expected :%s", user.Username, username)
+	}
+
+}

@@ -41,7 +41,7 @@ func (r repository) List(ctx context.Context, list *ListUsersRequest) ([]model.U
 	offset := (list.Page - 1) * list.Limit
 	err := r.db.Select(&users, ListUsersSQL, offset, list.Limit)
 	if err != nil {
-		r.logger.Errorf("Failed to select users %s", err)
+		r.logger.Errorf("Failed to get list of users %s", err)
 		return nil, err
 	}
 	return users, nil
@@ -52,7 +52,7 @@ func (r repository) GetByUsername(ctx context.Context, username string) (*model.
 	user := model.User{}
 	err := r.db.Get(&user, GetUserByUsernameSQL, username)
 	if err != nil {
-		r.logger.Errorf("Failed to select users %s", err)
+		r.logger.Errorf("Failed to get user by username :%s, because of %s", username, err)
 		return nil, err
 	}
 	return &user, nil

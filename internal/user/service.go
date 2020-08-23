@@ -11,6 +11,7 @@ import (
 // Service represents user application interface
 type Service interface {
 	ListUsers(ctx context.Context, listRequest *ListUsersRequest) ([]model.User, error)
+	GetByUsername(ctx context.Context, username string) (*model.User, error)
 }
 
 type userService struct {
@@ -50,4 +51,9 @@ func NewListUsersRequest() ListUsersRequest {
 		Pagination: *model.NewPagination(),
 		Search:     "",
 	}
+}
+
+// GetByUsername implement service to get user by username
+func (s userService) GetByUsername(ctx context.Context, username string) (*model.User, error) {
+	return s.repo.GetByUsername(ctx, username)
 }

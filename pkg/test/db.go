@@ -22,6 +22,7 @@ var (
 	db *sqlx.DB
 )
 
+// SetupMySQLContainer runs mysql docker container with seed data for testing purpose
 func SetupMySQLContainer(logger log.Logger) (func(), *sqlx.DB, error) {
 	logger.Info("setup MySQL Container")
 	ctx := context.Background()
@@ -74,12 +75,12 @@ func SetupMySQLContainer(logger log.Logger) (func(), *sqlx.DB, error) {
 
 	db, err = sqlx.Connect("mysql", connectionString)
 	if err != nil {
-		logger.Info("error connect to db: %+v\n", err)
+		logger.Error("error connect to db: %+v\n", err)
 		return closeContainer, db, err
 	}
 
 	if err = db.Ping(); err != nil {
-		logger.Infof("error pinging db: %+v\n", err)
+		logger.Errorf("error pinging db: %+v\n", err)
 		return closeContainer, db, err
 	}
 

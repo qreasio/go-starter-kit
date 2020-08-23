@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,7 +18,7 @@ func Start(cfg *config.Config, r http.Handler, logger log.Logger) error {
 	serverErrors := make(chan error, 1)
 
 	server := http.Server{
-		Addr:    fmt.Sprintf("%s", cfg.Server.Port),
+		Addr:    cfg.Server.Port,
 		Handler: r,
 	}
 

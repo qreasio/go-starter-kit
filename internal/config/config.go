@@ -62,7 +62,7 @@ func Load(file string, logger log.Logger) (*Config, error) {
 
 	// if dsn still empty, throw error
 	if c.DB.Dsn == "" {
-		errors.New("database configuration is missing")
+		return nil, errors.New("database configuration is missing")
 	}
 
 	return &c, nil

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	logger "log"
 	"os"
@@ -26,7 +27,7 @@ func main() {
 }
 
 func initialize() (*config.Config, log.Logger, error) {
-	logger := log.New().With(nil, "version", Version)
+	logger := log.New().With(context.Background(), "version", Version)
 	flag.Parse()
 
 	cfg, err := config.Load(*configPath, logger)

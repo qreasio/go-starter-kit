@@ -48,7 +48,7 @@ func TestUserService_ListUsers(t *testing.T) {
 		List(ctx, gomock.Eq(req)).
 		Return(mockListUsers, nil).AnyTimes()
 
-	logger := log.New().With(nil)
+	logger := log.New()
 	service := user.NewService(repo, validate, logger)
 
 	t.Log("Test UserService")

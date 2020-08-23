@@ -11,7 +11,8 @@ CREATE TABLE IF NOT EXISTS `users`  (
         `is_active` tinyint(1) NOT NULL,
         `date_joined` datetime(6) NOT NULL,
         PRIMARY KEY (`id`),
-        UNIQUE KEY `username` (`username`)
+        UNIQUE KEY `username` (`username`),
+        UNIQUE KEY `email_UNIQUE` (`email`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

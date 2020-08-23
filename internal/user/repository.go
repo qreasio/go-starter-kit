@@ -11,7 +11,7 @@ import (
 
 var (
 	// ListUsersSQL is SQL Clause to select public users data
-	ListUsersSQL = "SELECT username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users limit ?,?"
+	ListUsersSQL = "SELECT id, username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users limit ?,?"
 )
 
 // Repository define user repository methods interface

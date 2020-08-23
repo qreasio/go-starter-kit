@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `users`  (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
+        `id` varchar(36) NOT NULL,
         `password` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
         `last_login` datetime(6) DEFAULT NULL,
         `is_superuser` tinyint(1) NOT NULL,

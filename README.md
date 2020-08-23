@@ -74,7 +74,7 @@ Below are the steps if you want to run locally without docker
 
 3. Run migration
 
-    > make migrate-up
+    > make migrate
 
 4. Add seed data
     

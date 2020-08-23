@@ -3,6 +3,10 @@
 This project is opinionated Go starter kit / golang boilerplate that uses the golang standards project layout,
 using best and proven libraries and implements best practices for great foundation of Golang API project.
 
+<a href="https://goreportcard.com/report/github.com/qreasio/go-starter-kit">
+    <img class="badge" tag="github.com/qreasio/go-starter-kit" src="https://goreportcard.com/badge/github.com/qreasio/go-starter-kit">
+</a>
+  
 ## Background
 
 When I want to start to build Go API project, i don't have a good solid base to start and usually 

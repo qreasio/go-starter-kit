@@ -63,3 +63,41 @@ func TestUserRepository_ListUsers(t *testing.T) {
 
 	}
 }
+
+func TestUserRepository_GetUserByUsername(t *testing.T) {
+	logger := log.New()
+	mockDB, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
+	}
+	db := sqlx.NewDb(mockDB, "sqlmock")
+	defer mockDB.Close()
+
+	repo := NewRepository(db, logger)
+	const username = "isak"
+
+	t.Log("Test Get User with specific username")
+	{
+
+		rows := sqlmock.NewRows([]string{"username", "first_name", "last_name", "email", "date_joined", "last_login"}).
+			AddRow(username, "Isak", "Rickyanto", "isak.rickyanto@gmail.com", time.Now(), time.Now())
+		mock.ExpectQuery(GetUserByUsernameSQL).WithArgs(username).WillReturnRows(rows)
+
+		user, err := repo.GetByUsername(context.Background(), username)
+
+		if err != nil {
+			t.Errorf("Failed to get user %s", err)
+		}
+
+		if user.Username != username {
+			t.Errorf("Failed to get user, username is not same")
+		}
+
+		lastname := "Rickyanto"
+		if user.Lastname != lastname {
+			t.Errorf("Failed to get user, lastname is wrong")
+		}
+
+	}
+
+}

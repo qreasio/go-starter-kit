@@ -12,6 +12,8 @@ import (
 var (
 	// ListUsersSQL is SQL Clause to select public users data
 	ListUsersSQL = "SELECT id, username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users limit ?,?"
+	// GetUserByUsernameSQL is SQL Clause to get user data by username
+	GetUserByUsernameSQL = "SELECT id, username, first_name, last_name, email, date_joined, last_login, is_active, is_staff, is_superuser FROM users where username = ?"
 )
 
 // Repository define user repository methods interface
@@ -19,6 +21,7 @@ type Repository interface {
 	// Get returns the user with the specified user ID.
 	// Get(ctx context.Context, id string) (*model.User, error)
 	List(ctx context.Context, id *ListUsersRequest) ([]model.User, error)
+	GetByUsername(ctx context.Context, username string) (*model.User, error)
 }
 
 // repository persists user in database
@@ -42,4 +45,15 @@ func (r repository) List(ctx context.Context, list *ListUsersRequest) ([]model.U
 		return nil, err
 	}
 	return users, nil
+}
+
+// GetByUsername user from username
+func (r repository) GetByUsername(ctx context.Context, username string) (*model.User, error) {
+	user := model.User{}
+	err := r.db.Get(&user, GetUserByUsernameSQL, username)
+	if err != nil {
+		r.logger.Errorf("Failed to select users %s", err)
+		return nil, err
+	}
+	return &user, nil
 }

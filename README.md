@@ -54,13 +54,14 @@ Gostarterkit site: https://gostarterkit.com
 ### Go Libraries 
 
 - Go 1.14
-- Routing using github.com/go-chi/chi
+- Base web framework & Routing using github.com/go-chi/chi
 - Validation with github.com/go-playground/validator/
 - Database with github.com/jmoiron/sqlx
 - Logging with go.uber.org/zap 
 - Migration with github.com/go-migrate/migration
 - YAML with gopkg.in/yaml.v2
-- Linter with github.com/golangci/golangci-lint
+- Linter with github.com/golangci/golangci-lint  
+- Go static analysis with staticcheck.io https://github.com/dominikh/go-tools 
 - Mock generator using github.com/golang/mock
 
 ## Get Started
